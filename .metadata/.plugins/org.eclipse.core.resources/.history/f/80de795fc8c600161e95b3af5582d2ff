@@ -1,0 +1,125 @@
+package test;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+
+import test.EmployeeBean;
+
+/**
+ * Servlet implementation class servlet2
+ */
+@WebServlet("/servlet2")
+public class update extends HttpServlet {
+	Connection connection=null;
+	PreparedStatement pst=null;
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public update() {
+        super();
+        // TODO Auto-generated constructor stub
+        connection=MyConnection.getInstance().connection;
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		EmployeeBean db=new EmployeeBean();
+		response.setContentType("text/html");  
+		PrintWriter out=response.getWriter();
+		String eid=request.getParameter("employeeId");
+		String ename=request.getParameter("employeeName");
+		String esal=request.getParameter("employeeSalary");
+		String eloc=request.getParameter("employeeLocation");
+		String eexp=request.getParameter("employeeExp");
+		
+		double slary;
+		int exp;
+		try
+		{
+			slary=Double.parseDouble(esal);
+		 exp=Integer.parseInt(eexp);
+			
+		}
+		catch(Exception e)
+		{
+			slary=0;
+			exp=0;
+		}
+    db.setEmployeeId(eid);
+	db.setEmployeeName(ename);
+	db.setEmployeeSalary(slary);
+	db.setEmployeeLocation(eloc);
+	db.setEmployeeExp(exp);
+		
+		
+		
+		
+		
+		try{
+			
+			 pst= connection.prepareStatement("update emp set ename=?,esal=?,eloc=?,eexp=? where eid=?");
+				  
+				
+				pst.setString(1,db.getEmployeeName());  
+				pst.setDouble(2,db.getEmployeeSalary());  
+				pst.setString(3,db.getEmployeeLocation()); 
+				pst.setFloat(4,db.getEmployeeExp()); 
+				pst.setString(5,db.getEmployeeId());  
+				
+				int i=pst.executeUpdate();  
+				
+			out.print("Successfully Updated");	
+			}
+			
+			catch (SQLException e) 
+			{
+			
+				out.print(e);
+			}
+		out.print("<html><body>");
+		out.print("<form action='index.html' "+ ">");
+		out.print("<input type='submit' value='Go'>");
+		out.print("</form></body></html>");
+		
+
+	}
+
+
+
+	
+
+
+		
+		
+		
+	}
+
+
+
+	
+
+

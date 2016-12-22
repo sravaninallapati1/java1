@@ -1,0 +1,163 @@
+package test;
+
+
+	import java.sql.Connection;
+
+	import java.sql.PreparedStatement;
+	import java.sql.ResultSet;
+	import java.sql.SQLException;
+	import java.util.*;
+
+	import test.EmployeeBean;
+
+	public class DaoOperations {
+		Connection connection;
+		PreparedStatement preparedStatement;
+		ResultSet resultSet;
+
+		public DaoOperations() {
+			connection = MyConnection.getInstance().connection;
+		}
+
+		public int insertData(EmployeeBean employeeBean) {
+			int result = 0;
+			String query = "insert into employee values(?,?,?,?,?,?)";
+
+			try {
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, employeeBean.getEmployeeId());
+				preparedStatement.setString(2, employeeBean.getEmployeeName());
+				preparedStatement.setDouble(3, employeeBean.getEmployeeSalary());
+				preparedStatement.setString(4, employeeBean.getEmployeeLocation());
+				preparedStatement.setFloat(5, employeeBean.getEmployeeExp());
+				preparedStatement.setDouble(6, employeeBean.getEmployeeLoan());
+				
+
+				result = preparedStatement.executeUpdate();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return result;
+
+		}
+		
+		public ArrayList<EmployeeBean> search()
+		{
+			ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
+			
+			String query="select * from employee ";
+			
+			try {
+				preparedStatement=connection.prepareStatement(query);
+				//preparedStatement.setString(1, searchElement);
+				
+				resultSet=preparedStatement.executeQuery();
+				
+				EmployeeBean empBean=null;
+				while(resultSet.next())
+				{
+					empBean=new EmployeeBean();
+					empBean.setEmployeeId(resultSet.getString(1));
+					empBean.setEmployeeName(resultSet.getString(2));
+					empBean.setEmployeeSalary(resultSet.getDouble(3));
+					empBean.setEmployeeLocation(resultSet.getString(4));
+					empBean.setEmployeeExp(resultSet.getFloat(5));
+					empBean.setEmployeeLoan(resultSet.getDouble(6));
+					employeeList.add(empBean);
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			return employeeList;
+		}
+		public ArrayList<EmployeeBean> search(String searchElement)
+		{
+			ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
+			
+			String query="select EmployeeId,EmployeeName,EmployeeSalary,EmployeeLocation,EmployeeExp,EmployeeLoan from employee where EmpId=?";
+			
+			try {
+				preparedStatement=connection.prepareStatement(query);
+				preparedStatement.setString(1, searchElement);
+				
+				resultSet=preparedStatement.executeQuery();
+				
+				EmployeeBean empBean=null;
+				while(resultSet.next())
+				{
+					empBean=new EmployeeBean();
+					empBean.setEmployeeId(resultSet.getString(1));
+					empBean.setEmployeeName(resultSet.getString(2));
+					empBean.setEmployeeSalary(resultSet.getDouble(3));
+					empBean.setEmployeeLocation(resultSet.getString(4));
+					empBean.setEmployeeExp(resultSet.getFloat(5));
+					empBean.setEmployeeLoan(resultSet.getDouble(6));
+					employeeList.add(empBean);
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+			return employeeList;
+		}
+		
+public int loan(int eLoan,String Id) throws Exception
+		
+		{
+			int x=0;
+			ArrayList<EmployeeBean> loe=search(Id);
+			Iterator<EmployeeBean> itt=loe.iterator();
+			EmployeeBean ee=null;
+			while(itt.hasNext())
+			{
+			ee=(EmployeeBean)itt.next();
+			
+			if(ee.getEmployeeExp()>2 && ee.getEmployeeExp()<4)
+			{
+				eLoan=(int)ee.getEmployeeSalary()/2;
+				ee.setEmployeeLoan(eLoan);
+				System.out.println("loan=" +eLoan);
+				
+			}
+			else
+			{
+				
+				System.out.println("not eligible for loan");
+				
+			}
+		}
+			String query="update employee set EmployeeLoan=? where EmployeeId=?";
+
+			preparedStatement=connection.prepareStatement(query);
+			preparedStatement.setInt(1, eLoan);
+			preparedStatement.setString(2, Id);
+			x=preparedStatement.executeUpdate();
+			
+			System.out.println("Updated rows="+x);	
+			
+		return x;
+}
+		
+		
+		
+		
+		
+}
