@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
@@ -18,9 +19,9 @@ import javax.servlet.http.HttpSession;
 import test.EmployeeBean;
 
 /**
- * Servlet implementation class servlet2
+ * Servlet implementation class update
  */
-@WebServlet("/servlet2")
+@WebServlet("/update")
 public class update extends HttpServlet {
 	Connection connection=null;
 	PreparedStatement pst=null;
@@ -32,7 +33,7 @@ public class update extends HttpServlet {
     public update() {
         super();
         // TODO Auto-generated constructor stub
-        connection=MyConnection.getInstance().connection;
+       
     }
 
 	/**
@@ -56,67 +57,52 @@ public class update extends HttpServlet {
 		String eloc=request.getParameter("employeeLocation");
 		String eexp=request.getParameter("employeeExp");
 		String eloan=request.getParameter("employeeLoan");
-		double slary;
-		int exp;
+		double salary;
+		Float exp;
 		double loan;
 		try
 		{
-			slary=Double.parseDouble(esal);
-		 exp=Integer.parseInt(eexp);
+			salary=Double.parseDouble(esal);
+		 exp=Float.parseFloat(eexp);
 			loan=Double.parseDouble(eloan);
 		}
 		catch(Exception e)
 		{
-			slary=0;
-			exp=0;
+			salary=0;
+			exp=0.0f;
 			loan=0;
 		}
 		
     db.setEmployeeId(eid);
 	db.setEmployeeName(ename);
-	db.setEmployeeSalary(slary);
+	db.setEmployeeSalary(salary);
 	db.setEmployeeLocation(eloc);
 	db.setEmployeeExp(exp);	
 	db.setEmployeeLoan(loan);
-		try{
-			
-			 pst= connection.prepareStatement("update employee set EmployeeName=?, EmployeeSalary=?,EmployeeLocation=?,EmployeeExp=?,EmployeeLoan=? where EmployeeId=?");
-				  
-				
-				pst.setString(1,db.getEmployeeName());  
-				pst.setDouble(2,db.getEmployeeSalary());  
-				pst.setString(3,db.getEmployeeLocation()); 
-				pst.setFloat(4,db.getEmployeeExp()); 
-				pst.setString(5,db.getEmployeeId()); 
-				pst.setDouble(6,db.getEmployeeLoan());
-				
-				int i=pst.executeUpdate();  
-				
-			out.print("Successfully Updated");	
-			}
-			
-			catch (SQLException e) 
-			{
-			
-				out.print(e);
-			}
-		out.print("<html><body>");
-		out.print("<form action='index.html' "+ ">");
-		out.print("<input type='submit' value='Go'>");
-		out.print("</form></body></html>");
 		
-
-	}
-
-
 
 	
 
 
-		
-		
-		
+	DaoOperations dbo=new DaoOperations();
+	int x=dbo.update(db);
+RequestDispatcher requestDispact=request.getRequestDispatcher("success.jsp");
+	
+	HttpSession session=request.getSession();
+	session.setAttribute("employeeId",eid);
+	
+	if(x>0)
+	{
+		requestDispact.forward(request, response);
 	}
+	
+
+}
+}
+		
+		
+		
+	
 
 
 

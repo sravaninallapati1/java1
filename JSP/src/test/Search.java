@@ -18,7 +18,7 @@ import com.mysql.jdbc.PreparedStatement;
 /**
  * Servlet implementation class Search
  */
-//@WebServlet("/Search")
+@WebServlet("/Search")
 public class Search extends HttpServlet {
 	Connection connection= null;
 	PreparedStatement ps= null;
@@ -45,20 +45,43 @@ public class Search extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	response.setContentType("text/html");
-PrintWriter write=response.getWriter();
-String tempid=request.getParameter("employeeId");
+		String searchElement=request.getParameter("dropdwn");
 
-DaoOperations dao=new DaoOperations();
+		DaoOperations dao=new DaoOperations();
+		if(searchElement.equals("id"))
+		{
+			RequestDispatcher requestDis=request.getRequestDispatcher("searchID.jsp");
+			
+			requestDis.forward(request, response);
+		}
+		else if(searchElement.equals("name"))
+		{
+RequestDispatcher requestDis=request.getRequestDispatcher("searchNAME.jsp");
+			
+			requestDis.forward(request, response);
+		}
+		else if(searchElement.equals("sal"))
+		{
+RequestDispatcher requestDis=request.getRequestDispatcher("searchSALARY.jsp");
+			
+			requestDis.forward(request, response);
+		}
+		else if(searchElement.equals("location"))
+		{
+RequestDispatcher requestDis=request.getRequestDispatcher("searchLOCATION.jsp");
+			
+			requestDis.forward(request, response);
+		}
+		else if(searchElement.equals("exp"))
+		{
+RequestDispatcher requestDis=request.getRequestDispatcher("searchEXP.jsp");
+			
+			requestDis.forward(request, response);
+
+		
+	}
 
 
-ArrayList<EmployeeBean> empList=dao.search(tempid);
-
-HttpSession session=request.getSession();
-session.setAttribute("employeeList", empList);
-RequestDispatcher requestDis=request.getRequestDispatcher("search.jsp");
-
-requestDis.forward(request,response);
-
+	}
 }
-}
+

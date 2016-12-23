@@ -5,6 +5,7 @@ import java.io.IOException;
 
 
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
@@ -53,36 +54,32 @@ public class insert extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		PrintWriter out=response.getWriter();
 		String employeeId=request.getParameter("employeeId");
 		String employeeName=request.getParameter("employeeName");
 		String employeeSalary=request.getParameter("employeeSalary");
 		String employeeLocation=request.getParameter("employeeLocation");
 		String employeeExp=request.getParameter("employeeExp");
-		String employeeLoan=request.getParameter("employeeLoan");
+		
+		
 		double salary;
 		float exp;
-		double loan;
-		try
-		{
+		
+		
 		 salary=Double.parseDouble(employeeSalary);
 		 exp=Float.parseFloat(employeeExp);
-		 loan=Double.parseDouble(employeeLoan);
-		}
-		catch(Exception e)
-		{
-			salary=0.0;
-			exp=0.0f;
-			loan=0.0;
-		}
+		 
 		
+		
+	
 		EmployeeBean employeeBean=new EmployeeBean();
 		employeeBean.setEmployeeId(employeeId);
 		employeeBean.setEmployeeName(employeeName);
 		employeeBean.setEmployeeSalary(salary);
-		employeeBean.setEmployeeExp(exp);
 		employeeBean.setEmployeeLocation(employeeLocation);
-		employeeBean.setEmployeeLoan(loan);
+		employeeBean.setEmployeeExp(exp);
 		
+				
 		DaoOperations dao=new DaoOperations();
 		int result=dao.insertData(employeeBean);
 		

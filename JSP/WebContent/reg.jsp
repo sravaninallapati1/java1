@@ -54,7 +54,7 @@ color:red;
 
     <tr>
       <td>Enter Salary:</td>
-      <td><input type="number" name="employeeSalary" /></td>
+      <td><input type="text" name="employeeSalary" /></td>
     </tr>
      <tr>
       <td>Enter Location:</td>
@@ -62,7 +62,7 @@ color:red;
     </tr>
     <tr>
       <td>Enter Experience:</td>
-      <td><input type="number" name="employeeExp" /></td>
+      <td><input type="text" name="employeeExp" /></td>
     </tr>
    <!--  <tr>
     <td>Enter Loan:</td>

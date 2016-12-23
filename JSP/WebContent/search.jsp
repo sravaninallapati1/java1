@@ -10,63 +10,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="SearchServlet" method="post">
-
-<input type="text" name="searchElement">
-
-<input type="submit" value="Search">
-</form>
-
-<div align="center">
-
-
-
-
-<%
-Object obj=session.getAttribute("employeeList");
-
-if(obj!=null)
-{
-	%>
-	<table>
-<tr>
-<th>EmployeeId</th>
-<th>EmployeeName</th>
-<th>EmployeeSalary</th>
-<th>EmployeeLocation</th>
-<th>EmployeeExp</th>
-</tr>
-	<%
-	ArrayList<EmployeeBean> employeeList=(ArrayList)obj;
-	Iterator iterator=employeeList.iterator();
-	EmployeeBean employeebean=null;
-	while(iterator.hasNext())
-	{
-		employeebean=(EmployeeBean)iterator.next();
-		%>
-		<tr>
-<td> <%=employeebean.getEmployeeId() %> </td>	
-<td> <%=employeebean.getEmployeeName() %>	</td>
-<td> <%=employeebean.getEmployeeSalary() %></td>
-<td><%=employeebean.getEmployeeLocation() %></td>
-<td><%=employeebean.getEmployeeExp() %></td>
-		
-		</tr>
-		
-	<%	
-	}
-	session.removeAttribute("employeeList");
-	
-}
-else
-{
-	out.print("No Data");
-}
-
-%>
-</table>
-
-</div>
-
+<form action="Search" method="post">
+Enter id/name/salary/location/exp:<select name="dropdwn">
+ <option value="id">id</option>
+<option value="name">name</option>
+<option value="sal">salary</option>
+<option value="location">location</option>
+<option value="exp">exp</option>
+</select>
+<input type="submit" value="submit"/>
+</form> 
+<a href="index.html">home</a>
 </body>
 </html>

@@ -48,30 +48,24 @@ public class Loan extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		PrintWriter out=response.getWriter();
-		
 		
 
-		String tempid=request.getParameter("EmployeeId");
 		
-		DaoOperations dbo=new DaoOperations();
+response.setContentType("text/html");  
 		
+		String eid=request.getParameter("EmployeeId");
+		DaoOperations dao=new DaoOperations();
+		ArrayList<EmployeeBean> empList=dao.loan(eid);
 		
-		ArrayList<EmployeeBean> empList=dbo.loan(tempid);
-	
-		RequestDispatcher requestDispact=request.getRequestDispatcher("succes.jsp");
+RequestDispatcher requestDispact=request.getRequestDispatcher("Loan1.jsp");
 		
 		HttpSession session=request.getSession();
-		session.setAttribute("employeeList", empList);
+		session.setAttribute("employeelist",empList);
+		
 		
 			requestDispact.forward(request, response);
-
+		
 	}
-
-
-		
-		
 	
 		
 		
