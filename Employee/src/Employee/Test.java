@@ -1,7 +1,7 @@
 package Employee;
 import java.io.Serializable;
 
-public class Employee implements Serializable {
+public class Test implements Serializable {
 	private int id,emi,exp;
 	long salary,loan;
 	int ms;
