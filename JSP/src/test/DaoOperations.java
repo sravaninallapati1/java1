@@ -142,6 +142,41 @@
              		}
              		
              		return employeeList;
+             		
+             	}
+             	public ArrayList<EmployeeBean> searchName(String searchElement)
+             	{
+             		ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
+             		
+             		String query="select EmployeeId,EmployeeName,EmployeeSalary,EmployeeLocation,EmployeeExp,EmployeeLoan from employee where EmployeeName=?";
+             		
+             		try {
+             			pst=connection.prepareStatement(query);
+             			pst.setString(1, searchElement);
+             			
+             			resultSet=pst.executeQuery();
+             			
+             			EmployeeBean empBean=null;
+             			while(resultSet.next())
+             			{
+             				empBean=new EmployeeBean();
+             				empBean.setEmployeeId(resultSet.getString(1));
+             				empBean.setEmployeeName(resultSet.getString(2));
+             				empBean.setEmployeeSalary(resultSet.getDouble(3));
+             				empBean.setEmployeeLocation(resultSet.getString(4));
+             				empBean.setEmployeeExp(resultSet.getFloat(5));
+             				empBean.setEmployeeLoan(resultSet.getDouble(6));
+             				employeeList.add(empBean);
+             				
+             			}
+             			
+             			
+             		} catch (SQLException e) {
+             			// TODO Auto-generated catch block
+             			e.printStackTrace();
+             		}
+             		
+             		return employeeList;
              	}
              		public int update(EmployeeBean employeeBean)
              		{
