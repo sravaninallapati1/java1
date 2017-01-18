@@ -43,7 +43,7 @@ String tempid=request.getParameter("search");
 		DaoOperations dbo=new DaoOperations();
 		
 		
-		ArrayList<EmployeeBean> empList=dbo.search(tempid);
+		ArrayList<EmployeeBean> empList=dbo.searchID(tempid);
 		
 		HttpSession session=request.getSession();
 		session.setAttribute("employeeList", empList);

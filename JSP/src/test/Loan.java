@@ -57,7 +57,7 @@ response.setContentType("text/html");
 		DaoOperations dao=new DaoOperations();
 		ArrayList<EmployeeBean> empList=dao.loan(eid);
 		
-RequestDispatcher requestDispact=request.getRequestDispatcher("Loan1.jsp");
+RequestDispatcher requestDispact=request.getRequestDispatcher("loan.jsp");
 		
 		HttpSession session=request.getSession();
 		session.setAttribute("employeelist",empList);

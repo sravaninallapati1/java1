@@ -26,7 +26,7 @@ if(obj!=null)
 	<tr>
 	<th>Employee Id |</th>
 	<th>Employee Loan |</th>
-	<th>Employee EMI</th>
+	<!--  ><th>Employee EMI</th><!  -->
 	</tr>
 	<%
 	ArrayList<EmployeeBean> empList=(ArrayList)obj;
@@ -44,7 +44,7 @@ if(obj!=null)
 		</tr>
 		<%
 	}
-	session.removeAttribute("empList");
+	session.removeAttribute("employeeList");
 }
 else			
 {

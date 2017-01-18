@@ -44,11 +44,11 @@ response.setContentType("text/html");
 		String tempid=request.getParameter("tempid");
 
 		DaoOperations dbo=new DaoOperations();
-		ArrayList<EmployeeBean> list=dbo.loanUpdate(tempid);		
-		RequestDispatcher requestDispact=request.getRequestDispatcher("succes.jsp");
+		ArrayList<EmployeeBean> emplist=dbo.loanUpdate(tempid);		
+		RequestDispatcher requestDispact=request.getRequestDispatcher("Loan1.jsp");
 		
 		HttpSession session=request.getSession();
-		session.setAttribute("employeeId", list);
+		session.setAttribute("employeeId", emplist);
 		
 		requestDispact.forward(request, response);
 	}

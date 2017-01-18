@@ -45,7 +45,7 @@ public class SearchSAL extends HttpServlet {
 		PrintWriter out=response.getWriter();
 				DaoOperations dao=new DaoOperations();
 				
-		    ArrayList<EmployeeBean> empList=dao.search(searchElement);
+		    ArrayList<EmployeeBean> empList=dao.searchSal(searchElement);
 				
 				
 				HttpSession session=request.getSession();

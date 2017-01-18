@@ -1,6 +1,7 @@
   package test;
  import java.sql.*;
 
+
              import java.util.ArrayList;
              import java.util.Iterator;
 
@@ -41,7 +42,7 @@
              	}
              	
              	
-             	public ArrayList<EmployeeBean> search(String searchElement)
+             	public ArrayList<EmployeeBean> searchID(String searchElement)
              	{
              		ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
              		
@@ -83,7 +84,7 @@
              		
              		try {
              			pst=connection.prepareStatement(query);
-             			pst.setString(1, searchElement);
+             			pst.setString(2, searchElement);
              			
              			resultSet=pst.executeQuery();
              			
@@ -109,7 +110,7 @@
              		
              		return employeeList;
              	}
-             	public ArrayList<EmployeeBean> searchSalary(double searchElement)
+             	public ArrayList<EmployeeBean> searchSal(String searchElement)
              	{
              		ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
              		
@@ -117,7 +118,7 @@
              		
              		try {
              			pst=connection.prepareStatement(query);
-             			pst.setDouble(1, searchElement);
+             			pst.setString(3, searchElement);
              			
              			resultSet=pst.executeQuery();
              			
@@ -144,15 +145,15 @@
              		return employeeList;
              		
              	}
-             	public ArrayList<EmployeeBean> searchName(String searchElement)
+             	public ArrayList<EmployeeBean> searchLOC(String searchElement)
              	{
              		ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
              		
-             		String query="select EmployeeId,EmployeeName,EmployeeSalary,EmployeeLocation,EmployeeExp,EmployeeLoan from employee where EmployeeName=?";
+             		String query="select EmployeeId,EmployeeName,EmployeeSalary, EmployeeLocation,EmployeeExp,EmployeeLoan from employee where employeeSalary=?";
              		
              		try {
              			pst=connection.prepareStatement(query);
-             			pst.setString(1, searchElement);
+             			pst.setString(4, searchElement);
              			
              			resultSet=pst.executeQuery();
              			
@@ -177,7 +178,44 @@
              		}
              		
              		return employeeList;
+             		
              	}
+             	public ArrayList<EmployeeBean> searchEXP(String searchElement)
+             	{
+             		ArrayList<EmployeeBean> employeeList=new ArrayList<EmployeeBean>();
+             		
+             		String query="select EmployeeId,EmployeeName,EmployeeSalary, EmployeeLocation,EmployeeExp,EmployeeLoan from employee where employeeSalary=?";
+             		
+             		try {
+             			pst=connection.prepareStatement(query);
+             			pst.setString(5, searchElement);
+             			
+             			resultSet=pst.executeQuery();
+             			
+             			EmployeeBean empBean=null;
+             			while(resultSet.next())
+             			{
+             				empBean=new EmployeeBean();
+             				empBean.setEmployeeId(resultSet.getString(1));
+             				empBean.setEmployeeName(resultSet.getString(2));
+             				empBean.setEmployeeSalary(resultSet.getDouble(3));
+             				empBean.setEmployeeLocation(resultSet.getString(4));
+             				empBean.setEmployeeExp(resultSet.getFloat(5));
+             				empBean.setEmployeeLoan(resultSet.getDouble(6));
+             				employeeList.add(empBean);
+             				
+             			}
+             			
+             			
+             		} catch (SQLException e) {
+             			// TODO Auto-generated catch block
+             			e.printStackTrace();
+             		}
+             		
+             		return employeeList;
+             		
+             	}
+             	
              		public int update(EmployeeBean employeeBean)
              		{
              			int x=0;
@@ -232,7 +270,7 @@
              		
              		{
              			double eLoan;
-             			ArrayList<EmployeeBean> loe=search(Id);
+             			ArrayList<EmployeeBean> loe=new ArrayList<EmployeeBean>();
              			
              			
              			Iterator<EmployeeBean> itt=loe.iterator();
